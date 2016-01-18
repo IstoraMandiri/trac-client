@@ -1,5 +1,5 @@
 {
   "public":{
-    "txServerUrl" : "http://test.com/"
+    "txServerUrl" : "http://46.101.92.206:3000/"
   }
 }

@@ -1,3 +1,8 @@
 <template name="serialUnclaimed">
-  <h3>serialUnclaimed</h3>
+  <h3>Serial Unclaimed</h3>
+  {{#unless registering}}
+    <a href="#" class="register-serial">Register!</a>
+  {{else}}
+    <p>Registering...</p>
+  {{/unless}}
 </template>

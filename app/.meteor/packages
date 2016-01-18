@@ -19,4 +19,6 @@ kadira:blaze-layout
 meteorhacks:npm
 cosmos:browserify
 
+steeve:jquery-qrcode
+
 npm-container
