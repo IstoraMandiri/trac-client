@@ -17,16 +17,18 @@ Template.serialRegistration.onCreated ->
 
     $.get App.urls.getOwnershipInfo + @serial
     .error (err) =>
-      # couldn't connect
-      @view.set 'ConnectionError'
+      if err.status is 404
+        @view.set 'Unclaimed'
+        @templateData.set serial: @serial
+      else
+        @view.set 'ConnectionError'
     .success (data) =>
-      console.log 'got data', data
       if data.address
         @view.set 'Claimed'
         @templateData.set address: data.address
       else
-        @view.set 'Unclaimed'
-        @templateData.set serial: @serial
+        @view.set 'ConnectionError'
+
 
 
 Template.serialRegistration.helpers
