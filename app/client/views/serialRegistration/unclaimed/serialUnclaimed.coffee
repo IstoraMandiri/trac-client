@@ -22,20 +22,27 @@ Template.serialUnclaimed.events
 
   'click .register-serial' : (e, tmpl) ->
     # generate the keys
-    privateKey = randombytes 32
-    publicKey = secp256k1.publicKeyCreate(privateKey).toString('hex')
+    privateKey = randomBytes 32
+    address = "0x" + ethUtils.privateToAddress(privateKey).toString('hex')
+
     # update the UI
-    tmpl.keys.set 'private', privateKey.toString('hex')
-    tmpl.keys.set 'public', publicKey
     tmpl.view.set 'Posting'
-    # post data to txServer
-    $.post App.urls.registerSerial,
-      data:
-        serial: @serial
-        address: publicKey
+    postData =
+      serial: @serial
+      address: address
+
+    $.ajax
+      type: "POST"
+      url: App.urls.registerSerial
+      contentType: "application/json"
+      data: JSON.stringify postData
+
     .fail (err) =>
-      templ.view.set 'Error'
+      tmpl.view.set 'Error'
+
     .success (data) =>
+      tmpl.keys.set 'private', privateKey.toString('hex')
+      tmpl.keys.set 'public', address
       tmpl.templateData.set
         txHash: data.txHash
         # also pass parent vars updating
