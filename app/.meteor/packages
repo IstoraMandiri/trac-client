@@ -14,6 +14,7 @@ standard-minifiers
 coffeescript
 
 kadira:flow-router
+kadira:blaze-layout
 meteorhacks:npm
 cosmos:browserify
 
