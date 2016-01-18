@@ -12,6 +12,7 @@ jquery
 tracker
 standard-minifiers
 coffeescript
+reactive-var
 
 kadira:flow-router
 kadira:blaze-layout
