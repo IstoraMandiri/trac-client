@@ -2,10 +2,10 @@
 
 To run, start with the following:
 
-`
+```
 $ cd app
 $ meteor run --settings settings.json
-`
+```
 
 ## TODOs
 
