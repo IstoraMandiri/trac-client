@@ -46,7 +46,6 @@ Template.serialUnclaimed.events
 # Track the transaction by polling
 Template.serialUnclaimedPolling.onCreated ->
   txHash = @data.txHash
-  console.log @data
   @error = new ReactiveVar false
   attempts = 0
   do poll = =>
@@ -59,6 +58,7 @@ Template.serialUnclaimedPolling.onCreated ->
     # make the request
     $.get App.urls.getTxInfo + txHash
     .fail (err) =>
+      # TODO something special if the TX is rejected
       @error.set 'Connection Error. Retrying...'
       retry()
     .success (data) =>
@@ -67,6 +67,7 @@ Template.serialUnclaimedPolling.onCreated ->
         @data.parentView.set 'Registered'
         @data.parentTemplateData.set data.txData
       else
+        # TODO something special if the TX is rejected
         retry()
 
 Template.serialUnclaimedPolling.helpers
