@@ -13,7 +13,7 @@ Template.serialRegistration.onCreated ->
 
     # DEV
     # @view.set 'Unclaimed'
-    # @templateData.set address: 'xyz'
+    # @templateData.set serial: @serial
 
     $.get App.urls.getOwnershipInfo + @serial
     .error (err) =>
@@ -26,6 +26,8 @@ Template.serialRegistration.onCreated ->
         @templateData.set address: data.address
       else
         @view.set 'Unclaimed'
+        @templateData.set serial: @serial
+
 
 Template.serialRegistration.helpers
   serial: ->

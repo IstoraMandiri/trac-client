@@ -1,8 +1,37 @@
 <template name="serialUnclaimed">
   <h3>Serial Unclaimed</h3>
   {{#unless registering}}
-    <a href="#" class="register-serial">Register!</a>
+    <a href="#" class="register-serial">Register this serial!</a>
   {{else}}
-    <p>Registering...</p>
+    {{> Template.dynamic template=view data=data}}
+    {{#if publicKey}}
+      <p>Public Key:</p>
+      {{> renderQR publicKey}}
+    {{/if}}
+    {{#if privateKey}}
+      <p>Private Key:</p>
+      {{> renderQR privateKey}}
+    {{/if}}
   {{/unless}}
+</template>
+
+<template name="serialUnclaimedError">
+  <h3>Error</h3>
+  <a href="#" class="retry-registration">Try again...</a>
+</template>
+
+<template name="serialUnclaimedPosting">
+  <h3>Posting...</h3>
+</template>
+
+<template name="serialUnclaimedPolling">
+  <h3>Transaction pending...</h3>
+  {{#if error}}
+    <p>{{error}}</p>
+  {{/if}}
+</template>
+
+<template name="serialUnclaimedRegistered">
+  <h3>Success!</h3>
+  <p>Transaction Block: {{blockNumber}}</p>
 </template>

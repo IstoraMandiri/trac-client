@@ -13,6 +13,7 @@ tracker
 standard-minifiers
 coffeescript
 reactive-var
+reactive-dict
 
 kadira:flow-router
 kadira:blaze-layout
