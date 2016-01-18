@@ -48,7 +48,7 @@ Template.serialUnclaimedPolling.onCreated ->
   txHash = @data.txHash
   console.log @data
   @error = new ReactiveVar false
-  attemps = 0
+  attempts = 0
   do poll = =>
     retry = ->
       # TODO maximum attempts?
