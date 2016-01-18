@@ -15,11 +15,7 @@ coffeescript
 reactive-var
 reactive-dict
 
+hitchcott:ethereumjs-util-browserify
 kadira:flow-router
 kadira:blaze-layout
-meteorhacks:npm
-cosmos:browserify
-
 steeve:jquery-qrcode
-
-npm-container

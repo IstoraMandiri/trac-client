@@ -5,7 +5,7 @@
   {{else}}
     {{> Template.dynamic template=view data=data}}
     {{#if publicKey}}
-      <p>Public Key:</p>
+      <p>Address:</p>
       {{> renderQR publicKey}}
     {{/if}}
     {{#if privateKey}}
