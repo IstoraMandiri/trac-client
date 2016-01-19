@@ -12,26 +12,26 @@ Template.serialRegistration.onCreated ->
     @templateData.set null
 
     # DEV
-    @view.set 'Unclaimed'
-    @templateData.set serial: @serial
+    # @view.set 'Unclaimed'
+    # @templateData.set serial: @serial
     # DEV
     # @view.set 'Claimed'
     # @templateData.set address: 'xyz'
 
 
-    # $.get App.urls.getOwnershipInfo + @serial
-    # .error (err) =>
-    #   if err.status is 404
-    #     @view.set 'Unclaimed'
-    #     @templateData.set serial: @serial
-    #   else
-    #     @view.set 'ConnectionError'
-    # .success (data) =>
-    #   if data.address
-    #     @view.set 'Claimed'
-    #     @templateData.set address: data.address
-    #   else
-    #     @view.set 'ConnectionError'
+    $.get App.urls.getOwnershipInfo + @serial
+    .error (err) =>
+      if err.status is 404
+        @view.set 'Unclaimed'
+        @templateData.set serial: @serial
+      else
+        @view.set 'ConnectionError'
+    .success (data) =>
+      if data.address
+        @view.set 'Claimed'
+        @templateData.set address: data.address
+      else
+        @view.set 'ConnectionError'
 
 
 

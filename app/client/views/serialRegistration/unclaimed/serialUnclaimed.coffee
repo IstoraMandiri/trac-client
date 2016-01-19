@@ -9,13 +9,18 @@ Template.serialUnclaimed.onCreated ->
 Template.serialUnclaimed.helpers
   view: -> "serialUnclaimed" + Template.instance().view.get()
   data: -> Template.instance().templateData.get()
-  registering: -> Template.instance().view.get() isnt 'Prompting'
   publicKey: -> Template.instance().keys.get 'public'
   privateKey: -> Template.instance().keys.get 'private'
+  registering: -> Template.instance().view.get() isnt 'Prompting'
   cardColor: ->
     # TODO dynamic color
-    if Template.instance().view.get() is 'Prompting'
+    thisView = Template.instance().view.get()
+    if thisView is 'Prompting'
       'light-blue darken-2 white-text'
+    else if thisView is 'Error'
+      'pink darken-3 white-text'
+    else if thisView is 'Registered'
+      'light-green accent-2'
     else
       'grey lighten-4'
 
