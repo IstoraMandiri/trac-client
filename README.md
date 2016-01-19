@@ -26,7 +26,11 @@ Take a look at this repo for a QR code generator: https://github.com/hitchcott/t
 ## TODOs
 
 ```
+- Rename app to `trac-client`
+- Rename /serial -> /register
+- Refactor data flow
+- Add transfer route
+- Landing Page
 - Handle race condition with two people registering same QR code
   - Special response from get /tx/ ?
-- Landing Page
 ```
