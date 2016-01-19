@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Always pass through requests for files that exist
+    # Per http://stackoverflow.com/a/7090026/223225
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule . - [L]
+
+    # Send all other requests to index.html where the JavaScript router can take over
+    # and render the requested route
+    RewriteRule ^.*$ index.html [L]
+</IfModule>
