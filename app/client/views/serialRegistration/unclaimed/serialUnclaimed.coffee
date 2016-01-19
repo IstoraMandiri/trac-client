@@ -43,6 +43,10 @@ Template.serialUnclaimed.events
       serial: @serial
       address: address
 
+    # DEV
+    # tmpl.view.set 'Registered'
+    # tmpl.templateData.set blockNumber: 'block number here'
+
     $.ajax
       type: "POST"
       url: App.urls.registerSerial
