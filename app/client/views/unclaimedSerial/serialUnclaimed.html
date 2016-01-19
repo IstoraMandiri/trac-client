@@ -41,34 +41,46 @@
 
 <template name="serialUnclaimedRegistered">
   <h3>Success!</h3>
-  <p class='flow-text'>Transaction Block: <b>{{blockNumber}}</b></p>
+  <p class='flow-text'>Transaction Block: <b>{{txData.blockNumber}}</b></p>
   <div class="section">
     <div class="row">
       <div class="col s12">
-        <p>Please make a note of your public and private keys</p>
+        <p>Please make a note of your public and private keys.</p>
+        <div class="section">
+          <a href="{{downloadKeysUri}}" download="private_keys.txt" class='btn pink accent-2 btn-large'>Download Backup Keys</a>
+        </div>
       </div>
     </div>
     <div class="row">
-      <div class="col s6">
-        {{#if publicKey}}
+      <div class="col s4">
         <h5>Ethereum Address</h5>
-        <p class='break-word'>{{publicKey}}</p>
-        {{/if}}
+        <p class='break-word'>{{address}}</p>
       </div>
-      <div class="col s6">
-        {{#if privateKey}}
-        <h5>Private Key</h5>
-        <p class='break-word'>{{privateKey}}</p>
-        {{/if}}
+      <div class="col s4">
+        <h5>Address Key</h5>
+        <p class='break-word'>{{addressKey}}</p>
+      </div>
+      <div class="col s4">
+        <h5>Transfer Key</h5>
+        <p class='break-word'>{{transferKey}}</p>
       </div>
     </div>
     <div class="row">
-      <div class="col s6">
-        {{#if publicKey}} {{> renderQR publicKey}} {{/if}}
+      <div class="col s4">
+        {{> renderQR address}}
       </div>
-      <div class="col s6">
-        {{#if privateKey}} {{> renderQR privateKey}} {{/if}}
+      <div class="col s4">
+        {{> renderQR addressKey}}
       </div>
+      <div class="col s4">
+        {{> renderQR transferUrl}}
+      </div>
+    </div>
+    <div class="row">
+      <p>To transfer this serial, pelase visit:
+      <br>
+        <a class='break-word' href="{{transferUrl}}">{{transferUrl}}</a>
+      </p>
     </div>
   </div>
 </template>

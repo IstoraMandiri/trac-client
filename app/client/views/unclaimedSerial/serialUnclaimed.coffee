@@ -28,8 +28,12 @@ Template.serialUnclaimed.events
   'click .register-serial' : (e, tmpl) ->
 
     # generate the keys
-    privateKey = randomBytes 32
-    address = "0x" + ethUtils.privateToAddress(privateKey).toString('hex')
+    addressKey = randomBytes 32
+    address = "0x" + ethUtils.privateToAddress(addressKey).toString('hex')
+
+    # crate a sharing secret
+    transferKey = randomBytes 32
+    secretHash = ethUtils.sha256(transferKey).toString('hex')
 
     # update the UI
     tmpl.view.set 'Posting'
@@ -38,6 +42,7 @@ Template.serialUnclaimed.events
     postData =
       serial: tmpl.data.serial
       address: address
+      secret: secretHash
 
     # DEV
     # tmpl.view.set 'Registered'
@@ -55,11 +60,15 @@ Template.serialUnclaimed.events
     .success (data) =>
       tmpl.templateData.set
         txHash: data.txHash
-        privateKey: privateKey.toString('hex')
-        publicKey: address
+        address: address
+        addressKey: addressKey.toString('hex')
+        transferKey: transferKey.toString('hex')
+        serial: tmpl.data.serial
+
         # also pass parent vars updating
         parentView: tmpl.view
         parentTemplateData: tmpl.templateData
+
       tmpl.view.set 'Polling'
 
 # Track the transaction by polling
@@ -85,8 +94,10 @@ Template.serialUnclaimedPolling.onCreated ->
       if data.state is 'accepted'
         @data.parentView.set 'Registered'
         @data.parentTemplateData.set
-          privateKey: @data.privateKey
-          publicKey: @data.publicKey
+          address: @data.address
+          addressKey: @data.addressKey
+          transferKey: @data.transferKey
+          serial: @data.serial
           txData: data.txData
       else
         # TODO something special if the TX is rejected
@@ -95,3 +106,31 @@ Template.serialUnclaimedPolling.onCreated ->
 Template.serialUnclaimedPolling.helpers
   error: ->
     Template.instance().error.get()
+
+Template.serialUnclaimedRegistered.helpers
+  downloadKeysUri : ->
+    # TODO polyfill
+    base64Data = btoa """
+    Verify URL:
+    #{App.urls.clientUrl}serial/#{@serial}
+
+    Transfer URL:
+    #{App.urls.clientUrl}transfer/#{@serial}?p=#{@transferKey}
+
+    Serial:
+    #{@serial}
+
+    Address:
+    #{@address}
+
+    Address Private Key:
+    #{@addressKey}
+
+    Transfer Private Key:
+    #{@transferKey}
+    """
+    return "data:text/plain;base64," + base64Data
+
+  transferUrl: ->
+    "#{App.urls.clientUrl}transfer/#{@serial}?p=#{@transferKey}"
+

@@ -1,5 +1,6 @@
 {
   "public":{
-    "txServerUrl" : "http://46.101.92.206:3000/"
+    "txServerUrl" : "http://46.101.92.206:3000/",
+    "clientUrl" : "http://eth.hitchcott.com/"
   }
 }

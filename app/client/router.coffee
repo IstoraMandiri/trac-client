@@ -8,8 +8,18 @@ FlowRouter.route '/',
       main: 'landingPage'
       footer: 'footer'
 
-# serial registration
+# TODO refactor these into routes
+
+# registration
 FlowRouter.route '/serial/:serial',
+  action: ->
+    BlazeLayout.render 'defaultLayout',
+      header: 'header'
+      main: 'serialRegistration'
+      footer: 'footer'
+
+# registration
+FlowRouter.route '/transfer/:serial',
   action: ->
     BlazeLayout.render 'defaultLayout',
       header: 'header'
