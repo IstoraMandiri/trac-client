@@ -1,0 +1,74 @@
+<template name="serialUnclaimed">
+  <div class="row">
+    <div class="col s12">
+      <div class="card {{cardColor}}">
+        <div class="card-content center-align">
+          {{> Template.dynamic template=view data=data}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="serialUnclaimedPrompting">
+    <span class="card-title">Unclaimed Serial</span>
+    <p class='flow-text'>Nobody else has registered this serial</p>
+    <div class="section">
+      <a href="#" class="register-serial orange darken-3 btn btn-large">Register</a>
+    </div>
+</template>
+
+<template name="serialUnclaimedError">
+  <h3>Error</h3>
+  <p>There was a problem communicating with the server</p>
+  <div class='section'>
+    <a href="#" class="retry-registration btn btn-large">Try again...</a>
+  </div>
+</template>
+
+<template name="serialUnclaimedPosting">
+  {{> spinner}}
+</template>
+
+<template name="serialUnclaimedPolling">
+  <h3>Transaction Pending</h3>
+  {{> spinner}}
+  {{#if error}}
+    <p>{{error}}</p>
+    <p>Reterying...</p>
+  {{/if}}
+</template>
+
+<template name="serialUnclaimedRegistered">
+  <h3>Success!</h3>
+  <p class='flow-text'>Transaction Block: <b>{{blockNumber}}</b></p>
+  <div class="section">
+    <div class="row">
+      <div class="col s12">
+        <p>Please make a note of your public and private keys</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        {{#if publicKey}}
+        <h5>Ethereum Address</h5>
+        <p class='break-word'>{{publicKey}}</p>
+        {{/if}}
+      </div>
+      <div class="col s6">
+        {{#if privateKey}}
+        <h5>Private Key</h5>
+        <p class='break-word'>{{privateKey}}</p>
+        {{/if}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        {{#if publicKey}} {{> renderQR publicKey}} {{/if}}
+      </div>
+      <div class="col s6">
+        {{#if privateKey}} {{> renderQR privateKey}} {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

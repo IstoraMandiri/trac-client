@@ -3,15 +3,10 @@ Template.serialUnclaimed.onCreated ->
   # reactive view state and data
   @view = new ReactiveVar 'Prompting'
   @templateData = new ReactiveVar null
-  # key info
-  @keys = new ReactiveDict()
 
 Template.serialUnclaimed.helpers
   view: -> "serialUnclaimed" + Template.instance().view.get()
   data: -> Template.instance().templateData.get()
-  publicKey: -> Template.instance().keys.get 'public'
-  privateKey: -> Template.instance().keys.get 'private'
-  registering: -> Template.instance().view.get() isnt 'Prompting'
   cardColor: ->
     # TODO dynamic color
     thisView = Template.instance().view.get()
@@ -27,20 +22,21 @@ Template.serialUnclaimed.helpers
 
 # passed to child templates
 Template.serialUnclaimed.events
-  'click .retry-registration' : (tmpl) ->
-    tmpl.keys.set 'private', null
-    tmpl.keys.set 'public', null
+  'click .retry-registration' : (e, tmpl) ->
     tmpl.view.set 'Prompting'
 
   'click .register-serial' : (e, tmpl) ->
+
     # generate the keys
     privateKey = randomBytes 32
     address = "0x" + ethUtils.privateToAddress(privateKey).toString('hex')
 
     # update the UI
     tmpl.view.set 'Posting'
+
+    # TODO also generate a secret
     postData =
-      serial: @serial
+      serial: tmpl.data.serial
       address: address
 
     # DEV
@@ -57,10 +53,10 @@ Template.serialUnclaimed.events
       tmpl.view.set 'Error'
 
     .success (data) =>
-      tmpl.keys.set 'private', privateKey.toString('hex')
-      tmpl.keys.set 'public', address
       tmpl.templateData.set
         txHash: data.txHash
+        privateKey: privateKey.toString('hex')
+        publicKey: address
         # also pass parent vars updating
         parentView: tmpl.view
         parentTemplateData: tmpl.templateData
@@ -88,7 +84,10 @@ Template.serialUnclaimedPolling.onCreated ->
       @error.set false
       if data.state is 'accepted'
         @data.parentView.set 'Registered'
-        @data.parentTemplateData.set data.txData
+        @data.parentTemplateData.set
+          privateKey: @data.privateKey
+          publicKey: @data.publicKey
+          txData: data.txData
       else
         # TODO something special if the TX is rejected
         retry()
