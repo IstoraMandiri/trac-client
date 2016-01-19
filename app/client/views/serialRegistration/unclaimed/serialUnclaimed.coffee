@@ -12,6 +12,13 @@ Template.serialUnclaimed.helpers
   registering: -> Template.instance().view.get() isnt 'Prompting'
   publicKey: -> Template.instance().keys.get 'public'
   privateKey: -> Template.instance().keys.get 'private'
+  cardColor: ->
+    # TODO dynamic color
+    if Template.instance().view.get() is 'Prompting'
+      'light-blue darken-2 white-text'
+    else
+      'grey lighten-4'
+
 
 # passed to child templates
 Template.serialUnclaimed.events

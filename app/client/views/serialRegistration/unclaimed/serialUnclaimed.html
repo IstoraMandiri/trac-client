@@ -1,18 +1,52 @@
 <template name="serialUnclaimed">
-  <h3>Serial Unclaimed</h3>
-  {{#unless registering}}
-    <a href="#" class="register-serial">Register this serial!</a>
-  {{else}}
-    {{> Template.dynamic template=view data=data}}
-    {{#if publicKey}}
-      <p>Address:</p>
-      {{> renderQR publicKey}}
-    {{/if}}
-    {{#if privateKey}}
-      <p>Private Key:</p>
-      {{> renderQR privateKey}}
-    {{/if}}
-  {{/unless}}
+    <div class="row">
+      <div class="col s12">
+        <div class="card {{cardColor}}">
+          <div class="card-content center-align">
+            {{#unless registering}}
+              <span class="card-title">Unclaimed Serial</span>
+              <p class='flow-text'>Noody else has registered this serial</p>
+              <div class="section">
+                <a href="#" class="register-serial orange darken-3 btn btn-large">Register</a>
+              </div>
+            {{else}}
+              {{> Template.dynamic template=view data=data}}
+              <div class="row">
+                <div class="col s12">
+                  <p>Please make a note of your public and private keys</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s6">
+                  {{#if publicKey}}
+                    <h5>Ethereum Address</h5>
+                    <p class='break-word'>{{publicKey}}</p>
+                  {{/if}}
+                </div>
+                <div class="col s6">
+                  {{#if privateKey}}
+                    <h5>Private Key</h5>
+                    <p class='break-word'>{{privateKey}}</p>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s6">
+                  {{#if publicKey}}
+                    {{> renderQR publicKey}}
+                  {{/if}}
+                </div>
+                <div class="col s6">
+                  {{#if privateKey}}
+                    {{> renderQR privateKey}}
+                  {{/if}}
+                </div>
+              </div>
+            {{/unless}}
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <template name="serialUnclaimedError">
@@ -25,7 +59,7 @@
 </template>
 
 <template name="serialUnclaimedPolling">
-  <h3>Transaction pending...</h3>
+
   {{#if error}}
     <p>{{error}}</p>
   {{/if}}

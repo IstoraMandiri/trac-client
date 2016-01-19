@@ -19,3 +19,5 @@ hitchcott:ethereumjs-util-browserify
 kadira:flow-router
 kadira:blaze-layout
 steeve:jquery-qrcode
+
+materialize:materialize

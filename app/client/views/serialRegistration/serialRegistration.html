@@ -1,21 +1,66 @@
 <template name="serialRegistration">
-  <h1>Serial Registration</h1>
-  <p>Serial: {{serial}}</p>
-  <hr>
-  {{> UI.dynamic template=view data=data}}
+  <div class="section center-align">
+    <p class='flow-text'>
+      Serial:
+      <div class="chip">{{serial}}</div>
+    </p>
+  </div>
+  <div class="section">
+    {{> UI.dynamic template=view data=data}}
+  </div>
 </template>
-
 <template name="serialLoading">
-  Just a sec...
+  <div class="center-align">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-
 <template name="serialConnectionError">
-  <h3>Connection Error</h3>
-  <a href="#" class="get-ownership-info">Try Again</a>
+  <div class="row">
+    <div class="col s12">
+      <div class="card pink darken-3 white-text">
+        <div class="card-content center-align">
+          <span class="card-title">Connection Error</span>
+          <p>There was a problem reaching the server. Are you connected to the intenret?</p>
+        </div>
+        <div class="card-action center-align">
+          <a href="#" class="get-ownership-info">Try Again</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-
 <template name="serialClaimed">
-  <h3>Serial Claimed</h3>
-  <p>Serial is claimed by</p>
-  {{> renderQR address}}
+  <div class="row">
+    <div class="col s12">
+      <div class="card cyan accent-1">
+        <div class="card-content">
+          <div class="row">
+            <div class="col s5">
+              {{> renderQR address}}
+            </div>
+            <div class="col s7">
+              <h3>Serial Claimed</h3>
+              <p class='flow-text'>
+                Serial is claimed by
+                <br>
+                <b>{{address}}</b>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
