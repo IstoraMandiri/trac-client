@@ -83,8 +83,12 @@ Template.serialUnclaimedPolling.onCreated ->
       Meteor.setTimeout ->
         poll()
       , App.pollInterval
+
     # make the request
-    $.get App.urls.getTxInfo + txHash
+    $.ajax
+      type: 'GET'
+      cache: false
+      url: App.urls.getTxInfo + txHash
     .fail (err) =>
       # TODO something special if the TX is rejected
       @error.set 'Connection Error. Retrying...'

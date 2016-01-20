@@ -19,7 +19,10 @@ Template.serialRegistration.onCreated ->
     # @templateData.set address: 'xyz'
 
 
-    $.get App.urls.getOwnershipInfo + @serial
+    $.ajax
+      type: 'GET'
+      cache: false
+      url: App.urls.getOwnershipInfo + @serial
     .error (err) =>
       if err.status is 404
         @view.set 'Unclaimed'
